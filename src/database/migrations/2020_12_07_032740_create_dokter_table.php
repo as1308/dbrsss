@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenyakitTable extends Migration
+class CreateDokterTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreatePenyakitTable extends Migration
      */
     public function up()
     {
-        Schema::create('penyakit', function (Blueprint $table) {
+        Schema::create('dokter', function (Blueprint $table) {
             $table->id();
-            $table->string('kodepenyakit',10);
-            $table->string('namapenyakit',100);
-            $table->string('jenispenyakit',500);
+            $table->string('kodedokter',10)->references('kodedokter')->on('periksa');
+            $table->string('namadokter',100);
+            $table->date('tgllahir');
+            $table->enum('jeniskelamin', ['l', 'p']);
+            $table->string('alamat',100);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreatePenyakitTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penyakit');
+        Schema::dropIfExists('dokter');
     }
 }

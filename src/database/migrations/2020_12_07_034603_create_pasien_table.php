@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDokterTable extends Migration
+class CreatePasienTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateDokterTable extends Migration
      */
     public function up()
     {
-        Schema::create('dokter', function (Blueprint $table) {
+        Schema::create('pasien', function (Blueprint $table) {
             $table->id();
-            $table->string('kodedokter',10);
-            $table->string('namadokter',100);
+            $table->string('nopasien',10)->references('nopasien')->on('periksa');
+            $table->string('namapasien',100);
             $table->date('tgllahir');
             $table->enum('jeniskelamin', ['l', 'p']);
             $table->string('alamat',100);
+            $table->string('penyakit',500);
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateDokterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dokter');
+        Schema::dropIfExists('pasien');
     }
 }

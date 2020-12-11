@@ -9,7 +9,10 @@
 </head>
 <body>
 
-<form action="">
+<form action="{{  isset($data)
+                        ?route('dokter.update',['id' => $data->id])
+                        :route('dokter.simpan') }}" method="POST">
+  @csrf
 <div class="container">
 <nav class="navbar navbar-dark bg-primary">
   <a class="navbar-brand"><h2>Halaman Dokter</h2></a>
@@ -20,7 +23,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
     <li class="nav-item active">
-        <a class="nav-link" href="dokterr">Dokter<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="dokter">Dokter<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="karyawan">Karyawan <span class="sr-only">(current)</span></a>
@@ -45,37 +48,69 @@
 <div class="container">
   <div class="form-group">
     <label for="kodedokter">Kode Dokter</label>
-    <input type="kodedokter" class="form-control" placeholder="isi kode dokter">
+    <input type="text" name="kodedokter" class="form-control" placeholder="isi kode dokter" maxlength="10"
+    value={{  isset($data)?$data->kodedokter:""}}>
   </div>
 
   <div class="form-group">
     <label for="namadokter">Nama Dokter</label>
-    <input type="text" name="namadokter" class="form-control" placeholder="isi nama dokter">
+    <input type="text" name="namadokter" class="form-control" placeholder="isi nama dokter" maxlength="100"
+    value={{  isset($data)?$data->namadokter:""}}>
   </div>
 
   <div class="form-group">
     <label for="tgllahir">Tanggal Lahir</label>
-    <input type="text" name="tgllahir" class="form-control" placeholder="isi tanggal lahir">
+    <input type="date" name="tgllahir" class="form-control" placeholder="isi dengan Tahun-Bulan-Tanggal"
+    value={{  isset($data)?$data->tgllahir:""}}>
     </div>
 
   <div class="form-group">
     <label for="jeniskelamin">Jenis Kelamin</label>
-    <input type="text" name="jeniskelamin" class="form-control" placeholder="isi jenis kelamin">
+    <input type="text" name="jeniskelamin" class="form-control" placeholder="isi jenis kelamin p atau l" maxlength="1"
+    value={{  isset($data)?$data->jeniskelamin:""}}>
   </div>
 
   <div class="form-group">
     <label for="alamat">Alamat</label>
-    <input type="text" name="alamat" class="form-control" placeholder="isi alamat">
+    <input type="text" name="alamat" class="form-control" placeholder="isi alamat" maxlength="100"
+    value={{  isset($data)?$data->alamat:""}}>
   </div>
  
   <div class="form-group">
-  <button type="submit" class="btn btn-primary" value="simpan">Submit</button><br>
+  <button type="submit" class="btn btn-primary" value="simpan">Simpan</button><br>
    </div>
 
 <nav class="navbar navbar-primary bg-primary">
 <marquee direction="left" scrollamount="15" align="center" behavior="alternate"> <font color="white"><h2>Create@ElyasManurung</h2></font> </marquee>
 </nav>
 </form>
+<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Kode Dokter</th>
+                <th>Nama Dokter</th>
+                <th>Tanggal Lahir</th>
+                <th>Jenis Kelamin</th>
+                <th>Alamat</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($dokter as $item)
+                <tr>
+                    <td>{{ $item->kodedokter }}</td>
+                    <td>{{ $item->namadokter }}</td>
+                    <td>{{ $item->tgllahir }}</td>
+                    <td>{{ $item->jeniskelamin }}</td>
+                    <td>{{ $item->alamat }}</td>
+                    <td> <a href="{{ route('dokter.tampil',['id' => $item->id]) }}" 
+                        class="btn btn-warning btn-block">Rubah</a></td>
+                    <td> <a href="{{ route('dokter.hapus',['id' => $item->id]) }}" 
+                        class="btn btn-danger btn-block">Hapus</a></td>
+                </tr>
+            @endforeach
+        </tbody>
+  </table>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </body>

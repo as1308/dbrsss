@@ -15,15 +15,14 @@ class CreatePeriksaTable extends Migration
     {
         Schema::create('periksa', function (Blueprint $table) {
             $table->id();
-            $table->string('nopasien',10);
-            $table->string('kodedokter',10);
-            $table->string('kodepenyakit',10);
-            $table->string('kodepegawai',10);
+            $table->string('nopasien',10)->references('nopasien')->on('pasin');
+            $table->string('kodedokter',10)->references('kodedokter')->on('dokter');
+            $table->string('kodepenyakit',10)->references('kodepenyakit')->on('penyakit');
+            $table->string('kodepegawai',10)->references('kodepegawai')->on('karyawan');
+            $table->string('kodeobat',10)->references('kodeobat')->on('obat');
             $table->date('tglperiksa');
             $table->string('biayadokter',100);
             $table->string('biayadaftar',100);
-            $table->string('total',100);
-            
             $table->timestamps();
         });
     }
