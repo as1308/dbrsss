@@ -18,9 +18,17 @@ use \App\Http\Controllers\PenyakitController;
 |
 */
 
-/*Route::get('/dokter', function () {
-    return view('dokter');
-});*/
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::group(['middleware' => ['auth']], function () {
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/dokter',[DokterController::class,'index'])
     ->name('dokter.index');
@@ -102,6 +110,17 @@ Route::post('/penyakit/rubah/{id}',[PenyakitController::class,'update'])
     ->name('penyakit.update');
 
 
+Route::get('/periksa/form',[PeriksaController::class,'tampilform'])
+    ->name('periksa.form');
+        
+Route::get('/periksa/form',[PeriksaController::class,'tampilform'])
+    ->name('periksa.form');
+
+Route::post('/periksa/create',[PeriksaController::Class,'buatperiksa'])
+    ->name('periksa.create');
+
+Route::get('/periksa/list/',[PeriksaController::class,'tampillist'])
+        ->name('periksa.list');
 
 Route::get('/periksa',[PeriksaController::class,'index'])
     ->name('periksa.index');
@@ -118,6 +137,4 @@ Route::get('/periksa/tampil/{id}',[PeriksaController::class,'tampil'])
 Route::post('/periksa/rubah/{id}',[PeriksaController::class,'update'])
     ->name('periksa.update');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});

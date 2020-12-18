@@ -8,7 +8,12 @@ use \App\Models\Periksa;
 
 class PeriksaController extends Controller
 {
-    //
+    
+      public function tampillist(){
+        return view("periksa.list");
+    }
+
+
     public function index(){
         return view('periksa',[
             "periksa" =>Periksa::all()
@@ -34,13 +39,13 @@ class PeriksaController extends Controller
                return redirect()->route('periksa.index');
            }
    
-           public function tampil($id){
+           /*public function tampil($id){
                $periksa = Periksa::find($id);
                return view('periksa',[
                    "periksa" => Periksa::all(),
                    "data" => $periksa
                ]);
-           }
+           }*/
    
            
        public function update(Request $request,$id){
@@ -58,4 +63,38 @@ class PeriksaController extends Controller
    
            return redirect()->route('periksa.index');
        }
+
+       public function tampilform(){
+        return view("periksa.form");
+    }
+
+    public function buatperiksa(Request $request){
+
+        $request->validate([
+            // rule validation
+            "nopasien" => "required|max:10",
+            "kodedokter" => "required|max:10",
+            "kodepenyakit" => "required|max:10",
+            "kodepegawai" => "required|max:10",
+            "kodeobat" => "required|max:10",
+            "tglperiksa" => "required|max:10",
+            "biayadokter" => "required|max:10",
+            "biayadaftar" => "required|max:10"
+        ]);
+
+        \App\Models\Periksa::create([
+            "nopasien" => $request->nopasien,
+            "kodedokter" => $request->kodedokter,
+            "kodepenyakit" => $request->kodepenyakit,
+            "kodepegawai" => $request->kodepegawai,
+            "kodeobat" => $request->kodeobat,
+            "tglperiksa" => $request->tglperiksa,
+            "biayadokter" => $request->biayadokter,
+            "biayadaftar" => $request->biayadaftar
+        ]);
+
+        return redirect()->route("home")->with("info","Berhasil Buat Periksa"); //mengembalikan user ke tampilan home
+    }
+
+    
 }
